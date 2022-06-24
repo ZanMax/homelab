@@ -13,12 +13,12 @@ cp -av k3s.yaml ~/.kube/config
 
 sudo cat /var/lib/rancher/k3s/server/node-token
 
-copy token ----> K10cc3479e8c68aa324ad065191e21987a4accfba00b3097d97f7cafdaafa0a597f::server:bba6f3d7fe31f59a476862e2c1d1f0bf
+copy token ----> <token>::server:bba6f3d7fe31f59a476862e2c1d1f0bf
 
 
 
 #2 RUN ON NODE
-curl -sfL https://get.k3s.io | K3S_URL="https://<MASTER_IP>:6443" K3S_TOKEN="K101a476bebacddadcc4d16a973fc0d79f652a537c639cb0f725c3f85b30a253cb8::server:91b275d5aa678d3298ed43fa39089d2f" sh -
+curl -sfL https://get.k3s.io | K3S_URL="https://<MASTER_IP>:6443" K3S_TOKEN="<token>::server:91b275d5aa678d3298ed43fa39089d2f" sh -
 
 
 # ON MASTER Install HELM
