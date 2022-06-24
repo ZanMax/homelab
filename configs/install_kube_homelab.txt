@@ -1,0 +1,50 @@
+#0 Install NTP and NFS on master and all nodes
+sudo apt -y install ntp nfs-common
+sudo service ntp restart
+
+#1 Master
+curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC='server --no-deploy traefik' sh -
+
+mkdir -pv ~/.kube
+
+cat /etc/rancher/k3s/k3s.yaml > k3s.yaml
+
+cp -av k3s.yaml ~/.kube/config
+
+sudo cat /var/lib/rancher/k3s/server/node-token
+
+copy token ----> K10cc3479e8c68aa324ad065191e21987a4accfba00b3097d97f7cafdaafa0a597f::server:bba6f3d7fe31f59a476862e2c1d1f0bf
+
+
+
+#2 RUN ON NODE
+curl -sfL https://get.k3s.io | K3S_URL="https://<MASTER_IP>:6443" K3S_TOKEN="K101a476bebacddadcc4d16a973fc0d79f652a537c639cb0f725c3f85b30a253cb8::server:91b275d5aa678d3298ed43fa39089d2f" sh -
+
+
+# ON MASTER Install HELM
+
+curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3
+chmod 700 get_helm.sh
+./get_helm.sh
+
+
+# INGRESS INSTALL
+
+
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.1.0/deploy/static/provider/cloud/deploy.yaml
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.1.0/deploy/static/provider/baremetal/deploy.yaml
+
+kubectl -n ingress-nginx  patch svc ingress-nginx-controller  -p '{"spec": {"ports": [{"port": 80,"nodePort": 32700,"name": "http"}]}}'
+kubectl -n ingress-nginx  patch deployments.apps ingress-nginx-controller  -p '{"spec": {"template": {"spec": {"hostNetwork": true}}}}'
+
+
+
+#--------
+
+
+# Install persistent volume
+get PV from git
+EDIT FILE add IP and NFS name
+
+kubectl apply -f pv/
+
