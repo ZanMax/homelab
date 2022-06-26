@@ -1,0 +1,71 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: learn
+  name: learn
+  namespace: dev
+spec:
+  replicas: 1
+  revisionHistoryLimit: 2
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+  selector:
+    matchLabels:
+      app: learn
+  template:
+    metadata:
+      labels:
+        app: learn
+    spec:
+      imagePullSecrets:
+      - name: regcred
+      containers:
+      - name: learn
+        image: hub.docker.bar/max/learn:0.0.1
+        # image: hub.docker.bar/learn:453
+        imagePullPolicy: Always
+        env:
+        - name: APP_TYPE
+          value: 'STAGE'
+        - name: PYTHONDONTWRITEBYTECODE
+          value: '1'
+        - name: PYTHONUNBUFFERED
+          value: '1'
+        - name: PYTHONASYNCIODEBUG
+          value: '1'
+        - name: DEBUG_MODE
+          value: '1'
+        - name: ALLOWED_HOSTS
+          value: '*'
+        resources:
+          limits:
+            cpu: '300m'
+            memory: '300Mi'
+          requests:
+            cpu: '50m'
+            memory: '50Mi'
+        ports:
+        - containerPort: 8000
+        readinessProbe:
+          httpGet:
+            path: /
+            #path: /api/v1/healthcheck
+            port: 8000
+          initialDelaySeconds: 10
+          periodSeconds: 15
+          timeoutSeconds: 5
+          failureThreshold: 5
+        livenessProbe:
+          httpGet:
+            path: /
+            #path: /api/v1/healthcheck
+            port: 8000
+          initialDelaySeconds: 10
+          periodSeconds: 15
+          timeoutSeconds: 5
+          failureThreshold: 5
+      restartPolicy: Always

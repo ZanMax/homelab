@@ -1,0 +1,20 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: learn
+  labels:
+    app: learn
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: en.db.rv.ua
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: learn
+            port:
+              number: 8000
+
