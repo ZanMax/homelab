@@ -2,15 +2,15 @@ apiVersion: v1
 kind: Service
 metadata:
   labels:
-    app: learn
-  name: learn
+    app: <app_name>
+  name: <app_name>
   namespace: dev
 spec:
   ports:
-  - name: '8000'
-    port: 8000
-    targetPort: 8000
+  - name: '<app_port>'
+    port: <app_name>
+    targetPort: <app_name>
   selector:
-    app: learn
+    app: <app_name>
 status:
   loadBalancer: {}

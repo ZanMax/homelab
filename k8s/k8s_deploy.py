@@ -7,6 +7,7 @@ import string
 import subprocess
 import requests
 import re
+import json
 from pathlib import Path
 
 class bcolors:
@@ -42,14 +43,32 @@ def show_help():
 if len(sys.argv) > 1:
 	command = sys.argv[1]
 	if command == 'deploy':
-		app_name = input("APP name: ")
-		app_version = input("APP version: ")
-		hub_url = input("Hub url: ")
+		app_name = input("APP Name: ")
+		app_version = input("APP Version: ")
+		
+		app_domain = input("APP Domain: ")
+		app_port = input("APP Port: ")
+		app_healthcheck = input("APP Healthcheck (default / ): ")
+
+		hub_url = input("HUB Url: ")
+		env_variables = input("ENV variables --> dict {key:value}: ")
+		
+		if env_variables:
+			env_dict = json.loads(env_variables)
 
 		os.mkdir(app_name)
 		os.chdir(app_name)
 
-		download_file("https://raw.githubusercontent.com/ZanMax/homelab/main/README.md", "test.txt")
+		download_file("https://raw.githubusercontent.com/ZanMax/homelab/main/k8s/templates/deployment.yaml", "deployment.yaml")
+		download_file("https://raw.githubusercontent.com/ZanMax/homelab/main/k8s/templates/ingress.yaml", "ingress.yaml")
+		download_file("https://raw.githubusercontent.com/ZanMax/homelab/main/k8s/templates/service.yaml", "service.yaml")
+
+		with open("deployment.yaml", "rt") as file:
+			deployment = file.read()
+	
+		with open("deployment.yaml", "wt") as file:
+			deployment = deployment.replace("<app_name>", app_name)
+			file.write(deployment)
 
 	if command == 'redeploy':
 		print('redeploy')

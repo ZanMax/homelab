@@ -2,8 +2,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: learn
-  name: learn
+    app: <app_name>
+  name: <app_name>
   namespace: dev
 spec:
   replicas: 1
@@ -15,18 +15,18 @@ spec:
       maxUnavailable: 1
   selector:
     matchLabels:
-      app: learn
+      app: <app_name>
   template:
     metadata:
       labels:
-        app: learn
+        app: <app_name>
     spec:
       imagePullSecrets:
       - name: regcred
       containers:
-      - name: learn
-        image: hub.docker.bar/max/learn:0.0.1
-        # image: hub.docker.bar/learn:453
+      - name: <app_name>
+        image: <hub_url>/<app_name>:<app_version>
+        # image: <hub_url>/<app_name>:453
         imagePullPolicy: Always
         env:
         - name: APP_TYPE
@@ -49,21 +49,21 @@ spec:
             cpu: '50m'
             memory: '50Mi'
         ports:
-        - containerPort: 8000
+        - containerPort: <app_port>
         readinessProbe:
           httpGet:
-            path: /
+            path: <app_healthcheck>
             #path: /api/v1/healthcheck
-            port: 8000
+            port: <app_port>
           initialDelaySeconds: 10
           periodSeconds: 15
           timeoutSeconds: 5
           failureThreshold: 5
         livenessProbe:
           httpGet:
-            path: /
+            path: <app_healthcheck>
             #path: /api/v1/healthcheck
-            port: 8000
+            port: <app_port>
           initialDelaySeconds: 10
           periodSeconds: 15
           timeoutSeconds: 5
