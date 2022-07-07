@@ -21,30 +21,67 @@ copy token ----> <token>::server:bba6f3d7fe31f59a476862e2c1d1f0bf
 curl -sfL https://get.k3s.io | K3S_URL="https://<MASTER_IP>:6443" K3S_TOKEN="<token>::server:91b275d5aa678d3298ed43fa39089d2f" sh -
 
 
-# ON MASTER Install HELM
-
-curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3
-chmod 700 get_helm.sh
-./get_helm.sh
-
-
 # INGRESS INSTALL
 
 
-kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.1.0/deploy/static/provider/cloud/deploy.yaml
-kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.1.0/deploy/static/provider/baremetal/deploy.yaml
-
-kubectl -n ingress-nginx  patch svc ingress-nginx-controller  -p '{"spec": {"ports": [{"port": 80,"nodePort": 32700,"name": "http"}]}}'
-kubectl -n ingress-nginx  patch deployments.apps ingress-nginx-controller  -p '{"spec": {"template": {"spec": {"hostNetwork": true}}}}'
+wget https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.0.4/deploy/static/provider/baremetal/deploy.yaml
 
 
+edit deploy.yaml 
+add to deployments sections:
 
-#--------
+deployments:
+	template:
+	  spec:
+	    hostNetwork: true
+
+ployment object like following:
+  ports:
+    - name: http
+      containerPort: 80
+      hostPort: 80         # <- add this line
+      protocol: TCP
+    - name: https
+      containerPort: 443
+      hostPort: 443        # <- add this line
+      protocol: TCP
+    - name: webhook
+      containerPort: 8443
+      protocol: TCP
 
 
-# Install persistent volume
-get PV from git
-EDIT FILE add IP and NFS name
+kubectl apply -f deploy.yaml
 
-kubectl apply -f pv/
 
+# SCALE PODS TO COUNT OF KUBE NODES
+
+kubectl -n ingress-nginx scale deployment ingress-nginx-controller --replicas 3
+
+
+# Create NS
+
+ubectl create namespace dev
+
+# Add creds for docker hub
+
+kubectl -n dev apply -f secret.yaml
+
+# DEPLOY
+
+kubectl -n dev apply -f .
+
+
+# REDEPLOY 
+
+- update code
+
+- update version 0.0.1 -> 0.0.2
+docker build -t hub.docker.bar/max/learn:0.0.1 .
+
+docker push hub.docker.bar/max/learn:0.0.1 ---> 0.0.2 <-- update version
+
+- update cude deployment.yaml
+  image: hub.docker.bar/max/learn:0.0.1 ----> image: hub.docker.bar/max/learn:0.0.2
+
+
+kubectl -n dev apply -f .
