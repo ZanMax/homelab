@@ -40,3 +40,50 @@ UUID=c325f0bd-d9c7-4294-9eff-32cb77fed56a /mnt/data ext4 defaults 0 1
 ```bash
 sudo mount -a
 ```
+
+##### Setting the DNS Servers
+```bash
+sudo nano /etc/dhcpcd.conf
+```
+
+```bash
+static domain_name_servers=8.8.4.4 8.8.8.8
+```
+
+```bash
+sudo service dhcpcd restart
+```
+
+
+##### Sync Time
+```bash
+timedatectl status
+```
+
+```bash
+timedatectl list-timezones | grep Canada
+```
+
+```bash
+timedatectl list-timezones | grep Canada
+```
+
+```bash
+sudo timedatectl set-timezone Canada/Pacific
+```
+
+```bash
+apt install systemd-timesyncd
+```
+
+```bash
+timedatectl set-ntp true
+```
+
+Fix the delay now:
+
+```bash
+sudo service ntp stop
+sudo ntpdate 0.us.pool.ntp.org
+sudo service ntp start
+```
