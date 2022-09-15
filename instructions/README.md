@@ -65,19 +65,15 @@ timedatectl list-timezones | grep Canada
 ```
 
 ```bash
-timedatectl list-timezones | grep Canada
-```
-
-```bash
 sudo timedatectl set-timezone Canada/Pacific
 ```
 
 ```bash
-apt install systemd-timesyncd
+sudo apt install systemd-timesyncd
 ```
 
 ```bash
-timedatectl set-ntp true
+sudo timedatectl set-ntp true
 ```
 
 Fix the delay now:
