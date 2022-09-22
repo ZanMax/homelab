@@ -90,7 +90,20 @@ Blue LEDs
 ```bash
 /sys/class/leds/user-led/brightness
 ```
+```bash
+echo '0' | sudo tee -a /sys/class/leds/user-led/brightness
+```
 
 Green LEDs
 ```bash
+```
+
+##### Add script on server startup
+edit cron
+```bash
+crontab -e
+```
+add to end
+```bash
+@reboot sudo /home/ubuntu/script.sh &
 ```
