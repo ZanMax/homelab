@@ -83,3 +83,14 @@ sudo service ntp stop
 sudo ntpdate 0.us.pool.ntp.org
 sudo service ntp start
 ```
+
+##### Turn off LEDs
+
+Blue LEDs
+```bash
+/sys/class/leds/user-led/brightness
+```
+
+Green LEDs
+```bash
+```
