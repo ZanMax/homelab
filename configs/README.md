@@ -35,6 +35,10 @@ https://raw.githubusercontent.com/ZanMax/scripts/master/sh/go_installer.sh
 curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC='server --no-deploy traefik' sh -
 ```
 
+```bash
+ssh-keygen
+ssh-copy-id -i ~/.ssh/id_rsa.pub <node_ip>
+```
 
 #### Node
 
