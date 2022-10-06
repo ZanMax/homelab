@@ -60,7 +60,7 @@ kubectl -n ingress-nginx scale deployment ingress-nginx-controller --replicas 3
 
 # Create NS
 
-ubectl create namespace dev
+kubectl create namespace dev
 
 # Add creds for docker hub
 
