@@ -66,6 +66,15 @@ kubectl create namespace dev
 
 kubectl -n dev apply -f secret.yaml
 
+# BUILD
+docker build -t hub.docker.bar/max/learn:0.0.1 .
+
+for ARM64 arch
+docker buildx build --platform linux/arm64 -t hub.docker.bar/max/your-progress-arm64:0.0.1 .
+
+other atch
+docker buildx ls
+
 # DEPLOY
 
 kubectl -n dev apply -f .
@@ -76,12 +85,12 @@ kubectl -n dev apply -f .
 - update code
 
 - update version 0.0.1 -> 0.0.2
-docker build -t hub.docker.bar/max/learn:0.0.1 .
+docker build -t hub.docker.bar/max/learn:0.0.1 . ---> 0.0.2 <-- update version
 
 docker push hub.docker.bar/max/learn:0.0.1 ---> 0.0.2 <-- update version
 
-- update cude deployment.yaml
+- update version in deployment.yaml
   image: hub.docker.bar/max/learn:0.0.1 ----> image: hub.docker.bar/max/learn:0.0.2
 
-
+kubectl -n dev delete -f .
 kubectl -n dev apply -f .
