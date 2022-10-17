@@ -1,0 +1,3 @@
+kubectl describe pods -n dev | grep Name
+
+kubectl exec -it pod-name -- /bin/bash

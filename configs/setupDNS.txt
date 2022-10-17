@@ -1,0 +1,31 @@
+# Check DNS
+
+resolvectl status
+
+## Setup the Global DNS
+
+sudo nano /etc/systemd/resolved.conf
+
+--> update
+
+DNS=1.1.1.1 1.0.0.1
+
+sudo systemctl restart systemd-resolved.service
+
+resolvectl status
+
+## Disable DNS processing in NetworkManager
+
+--> new file:
+
+sudo nano /etc/NetworkManager/conf.d/dns.conf
+
+[main]
+# do not use the dhcp-provided dns servers, but rather use the global
+# ones specified in /etc/systemd/resolved.conf
+dns=none
+systemd-resolved=false
+
+--> restart NetworkManager
+
+sudo systemctl reload NetworkManager.service
