@@ -107,3 +107,24 @@ add to end
 ```bash
 @reboot sudo /home/ubuntu/script.sh &
 ```
+
+##### Resize Ubuntu disk
+```bash
+df -h
+```
+
+```bash
+vgdisplay
+```
+
+```bash
+lvextend -l +100%FREE /dev/ubuntu-vg/ubuntu-lv
+```
+
+```bash
+vgdisplay
+```
+
+```bash
+resize2fs /dev/mapper/ubuntu--vg-ubuntu--lv
+```
