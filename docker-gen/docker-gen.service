@@ -1,0 +1,23 @@
+[Unit]
+Description=Docker-GEN
+
+[Service]
+User=root
+Group=root
+WorkingDirectory=/tmp
+Environment="PATH=/usr/bin/"
+ExecStart=/bin/docker-gen -only-published -watch -notify "/etc/init.d/nginx reload" /etc/nginx.tmpl /etc/nginx/sites-enabled/default
+Restart=always
+KillSignal=SIGQUIT
+#Type=notify
+NotifyAccess=all
+Type=simple
+RestartSec=2
+
+
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier="docker-gen >> "
+
+[Install]
+WantedBy=multi-user.target
