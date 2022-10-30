@@ -12,11 +12,11 @@ mv docker-gen /bin
 ```
 
 ```bash
-sudo wget https://raw.githubusercontent.com/jwilder/docker-gen/master/templates/nginx.tmpl -O /etc/systemd/system/docker-gen.service
+sudo wget https://raw.githubusercontent.com/ZanMax/homelab/main/docker-gen/docker-gen.service -O /etc/systemd/system/docker-gen.service
 ```
 
 ```bash
-sudo wget https://raw.githubusercontent.com/jwilder/docker-gen/master/templates/nginx.tmpl -O /etc/nginx.tmpl
+sudo wget https://raw.githubusercontent.com/ZanMax/homelab/main/docker-gen/nginx.tmpl -O /etc/nginx.tmpl
 ```
 
 ```bash
