@@ -7,8 +7,10 @@ mkdir jenkins_home
 ```
 
 ```bash
-wget https://github.com/nginx-proxy/docker-gen/releases/download/0.7.6/docker-gen-linux-amd64-0.7.6.tar.gz
+wget https://raw.githubusercontent.com/ZanMax/homelab/main/jenkins/docker-compose.yml
 ```
+
+##### Edit docker-compose.yml and add full path to jenkins_home
 
 ```bash
 docker-compose up -d
@@ -18,4 +20,4 @@ docker-compose up -d
 docker exec jenkins-lts cat /var/jenkins_home/secrets/initialAdminPassword
 ```
 
-Go to jenkins.local and "Unlock Jenkins"
+##### Go to jenkins.local and "Unlock Jenkins"
