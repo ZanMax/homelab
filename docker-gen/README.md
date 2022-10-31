@@ -8,7 +8,7 @@ tar xvzf docker-gen-linux-amd64-0.7.6.tar.gz
 ```
 
 ```bash
-mv docker-gen /bin
+sudo mv docker-gen /bin
 ```
 
 ```bash
