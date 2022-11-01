@@ -9,7 +9,7 @@ services:
     environment:
       - PUID=1000
       - PGID=1000
-      - TZ=Europe/London
+      - TZ=Canada/Pacific
       - SERVERURL=wireguard.domain.com #optional
       - SERVERPORT=51820 #optional
       - PEERS=1 #optional
@@ -18,7 +18,7 @@ services:
       - ALLOWEDIPS=0.0.0.0/0 #optional
       - LOG_CONFS=true #optional
     volumes:
-      - /path/to/appdata/config:/config
+      - /home/dev/wireguard/config:/config
       - /lib/modules:/lib/modules
     ports:
       - 51820:51820/udp
