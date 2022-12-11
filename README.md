@@ -6,10 +6,7 @@ Services, scripts and configs for my HomeLab
 | Service | Description                    |
 | ------------- | ------------------------------ |
 | `Docker-Gen`   | Docker-Gen service to update nginx configs|
-| `Pi-Hole`   | AD blocker|
-| `Jenkins`   | CI/CD |
-| `GitLab`   | Git, CI/CD |
-| `Wireguard`   | VPN |
+
 
 ### Configs
 
