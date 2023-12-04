@@ -19,7 +19,7 @@ chmod +x upgrade.sh
 ### Install packages
 
 ```bash
-sudo apt -y install python3-dev python3-pip python-is-python3 git zip wget curl ntp
+sudo apt -y install python3-dev python3-pip python3-vemv python-is-python3 git zip wget curl ntp
 ```
 
 ### Resize DISK
